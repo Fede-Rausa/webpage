@@ -8,7 +8,7 @@ Hi! I'm Fede, and I love data science, old music and good books.
 
 I have a bachelor degree in economics and a master in statistics. 
 
-I'm also good at programming (my favourite languages are R, Python and Arduino).
+I'm also good at programming (mostly in R and Python).
 
 If You want to know me, here are my [contacts](contacts.qmd).
 
