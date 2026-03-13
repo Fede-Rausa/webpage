@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>things to say – Fede Rausa</title>
+<title>Posts – Fede Rausa</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,9 +86,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -396,16 +396,16 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    </div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="RGF0YSUyMFNjaWVuY2U=">Data Science <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RWNvbm9taWNz">Economics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R2VuZXJhbA==">General <span class="quarto-category-count">(1)</span></div><div class="category" data-category="T3B0aW1pemF0aW9u">Optimization <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Ug==">R <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">things to say</h1>
+<h1 class="title">Posts</h1>
 </div>
 
 
@@ -427,8 +427,67 @@ window.Quarto = {
 
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+      <option value="" disabled="" selected="" hidden="">Order By</option>
+      <option value="index" data-direction="asc">Default</option>
+      <option value="listing-title" data-direction="asc">
+        Title
+      </option>
+      <option value="listing-date-sort" data-direction="asc">
+        Date - Oldest
+      </option>
+      <option value="listing-date-sort" data-direction="desc">
+        Date - Newest
+      </option>
+      <option value="listing-author" data-direction="asc">
+        Author
+      </option>
+    </select>
+  </div>
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filter">
+    </div>
+</div>
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="RGF0YSUyMFNjaWVuY2U=" data-listing-date-sort="1705273200000" data-listing-file-modified-sort="1768259190169" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="5">
+<div class="quarto-post image-right" data-index="0" data-categories="RWNvbm9taWNzJTJDT3B0aW1pemF0aW9uJTJDUg==" data-listing-date-sort="1709593200000" data-listing-file-modified-sort="1773420001274" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2828">
+<div class="thumbnail"><a href="./posts/PaniniProfitti.html" class="no-external">
+
+<p class="card-img-top"><img src="posts\PaniniProfitti_files\figure-html\unnamed-chunk-1-1.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/PaniniProfitti.html" class="no-external">Panini e Profitti</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('RWNvbm9taWNz'); return false;">Economics</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('T3B0aW1pemF0aW9u'); return false;">Optimization</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Ug=='); return false;">R</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/PaniniProfitti.html" class="no-external">
+Si vogliono qui mostrare alcune tecniche statistiche, economiche e matematiche per prendere delle decisioni su alcuni aspetti economici della paninoteca dell’oratorio tali…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/PaniniProfitti.html" class="no-external">
+<div class="listing-date">
+Mar 5, 2024
+</div>
+<div class="listing-author">
+Federico Rausa
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="RGF0YSUyMFNjaWVuY2U=" data-listing-date-sort="1705273200000" data-listing-file-modified-sort="1768259190169" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="5">
 <div class="thumbnail"><a href="./posts/second-post.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -438,6 +497,11 @@ window.Quarto = {
 <h3 class="no-anchor listing-title">
 <a href="./posts/second-post.html" class="no-external">Data Analysis with Python</a>
 </h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('RGF0YSUyMFNjaWVuY2U='); return false;">Data Science</div>
+
+</div>
 <div class="delink listing-description"><a href="./posts/second-post.html" class="no-external">
 <p>Exploring data analysis techniques with Python</p>
 </a></div>
@@ -450,7 +514,7 @@ Jan 15, 2024
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="R2VuZXJhbA==" data-listing-date-sort="1704063600000" data-listing-file-modified-sort="1768259193091" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="19">
+<div class="quarto-post image-right" data-index="2" data-categories="R2VuZXJhbA==" data-listing-date-sort="1704063600000" data-listing-file-modified-sort="1768259193091" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="19">
 <div class="thumbnail"><a href="./posts/first-post.html" class="no-external">
 
 <img loading="lazy" src="./posts/path/to/image.png" class="thumbnail-image">
@@ -460,6 +524,11 @@ Jan 15, 2024
 <h3 class="no-anchor listing-title">
 <a href="./posts/first-post.html" class="no-external">My First Blog Post</a>
 </h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('R2VuZXJhbA=='); return false;">General</div>
+
+</div>
 <div class="delink listing-description"><a href="./posts/first-post.html" class="no-external">
 <p>My first blog post on the new website</p>
 </a></div>
@@ -468,31 +537,6 @@ Jan 15, 2024
 <a href="./posts/first-post.html" class="no-external">
 <div class="listing-date">
 Jan 1, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="RWNvbm9taWNzJTJDT3B0aW1pemF0aW9u" data-listing-date-sort="1709593200000" data-listing-file-modified-sort="1773419358139" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2828">
-<div class="thumbnail"><a href="./posts/PaniniProfitti.html" class="no-external">
-
-<p class="card-img-top"><img src="posts\PaniniProfitti_files\figure-html\unnamed-chunk-1-1.png"  class="thumbnail-image card-img"/></p>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/PaniniProfitti.html" class="no-external">Panini e Profitti</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/PaniniProfitti.html" class="no-external">
-Si vogliono qui mostrare alcune tecniche statistiche, economiche e matematiche per prendere delle decisioni su alcuni aspetti economici della paninoteca dell’oratorio tali…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/PaniniProfitti.html" class="no-external">
-<div class="listing-date">
-Mar 5, 2024
-</div>
-<div class="listing-author">
-Federico Rausa
 </div>
 </a>
 </div>

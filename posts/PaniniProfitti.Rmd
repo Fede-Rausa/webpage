@@ -2,7 +2,7 @@
 title: "Panini e Profitti"
 author: "Federico Rausa"
 date: "2024-03-05"
-categories: [Economics, Optimization]
+categories: [Economics, Optimization, R]
 tags: [Paninoteca, R]
 ---
 
@@ -381,7 +381,7 @@ Ad esempio, dato il vettore di 3 elementi vet = {2,5,3}, si vede che $\sum{vet_i
 P è il vettore dei prezzi, e Q è il vettore delle quantità vendute. La lunghezza di P e Q è la stessa, ed è 
 pari al numero di piatti che è possibile ordinare dal menu.
 Quindi, ad esempio, dato $menu = [patatine, birra, salamella]$
-si può avere $P = [2€, 3€, 4.50€]$ e $Q = [200, 50, 130]$
+si può avere P = [2€, 3€, 4.50€] e Q = [200, 50, 130].
 Quindi i ricavi di una serie di prodotti sono la somma dei loro prezzi di vendita moltiplicati per le rispettive quantità vendute.
 Magari è banale, ma se non si capisce questo non si capisce assolutamente niente.
 

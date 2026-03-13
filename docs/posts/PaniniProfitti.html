@@ -435,6 +435,7 @@ window.Quarto = {
   <div class="quarto-categories">
     <div class="quarto-category">Economics</div>
     <div class="quarto-category">Optimization</div>
+    <div class="quarto-category">R</div>
   </div>
   </div>
 
@@ -750,7 +751,7 @@ F-statistic: 8.296 on 1 and 16 DF,  p-value: 0.01088</code></pre>
 <section id="i-ricavi-in-generale-in-più-di-una-variabile" class="level1">
 <h1>7.1 - I ricavi (in generale: in più di una variabile)</h1>
 <p><span class="math inline">\(ricavi = R = \sum{P_i * Q_i} = somma(prezzo_i *quantitàVenduta_i)\)</span></p>
-<p>dove il segno <span class="math inline">\(\sum\)</span> è il simbolo della sommatoria, ovvero la somma di tutti gli elementi i del vettore. Un vettore, se non lo sai, è una semplice lista di numeri, ordinata in base a degli indici. Qui consideriamo diversi beni i, con i = [1,…, n], i indice intero positivo. Gli stessi indici sono associati ai relativi prezzi e alle relative quantità vendute. Ad esempio, dato il vettore di 3 elementi vet = {2,5,3}, si vede che <span class="math inline">\(\sum{vet_i} = 2+5+3 = vet_1 + vet_2 + vet_3\)</span> P è il vettore dei prezzi, e Q è il vettore delle quantità vendute. La lunghezza di P e Q è la stessa, ed è pari al numero di piatti che è possibile ordinare dal menu. Quindi, ad esempio, dato <span class="math inline">\(menu = [patatine, birra, salamella]\)</span> si può avere <span class="math inline">\(P = [2€, 3€, 4.50€]\)</span> e <span class="math inline">\(Q = [200, 50, 130]\)</span> Quindi i ricavi di una serie di prodotti sono la somma dei loro prezzi di vendita moltiplicati per le rispettive quantità vendute. Magari è banale, ma se non si capisce questo non si capisce assolutamente niente.</p>
+<p>dove il segno <span class="math inline">\(\sum\)</span> è il simbolo della sommatoria, ovvero la somma di tutti gli elementi i del vettore. Un vettore, se non lo sai, è una semplice lista di numeri, ordinata in base a degli indici. Qui consideriamo diversi beni i, con i = [1,…, n], i indice intero positivo. Gli stessi indici sono associati ai relativi prezzi e alle relative quantità vendute. Ad esempio, dato il vettore di 3 elementi vet = {2,5,3}, si vede che <span class="math inline">\(\sum{vet_i} = 2+5+3 = vet_1 + vet_2 + vet_3\)</span> P è il vettore dei prezzi, e Q è il vettore delle quantità vendute. La lunghezza di P e Q è la stessa, ed è pari al numero di piatti che è possibile ordinare dal menu. Quindi, ad esempio, dato <span class="math inline">\(menu = [patatine, birra, salamella]\)</span> si può avere P = [2€, 3€, 4.50€] e Q = [200, 50, 130]. Quindi i ricavi di una serie di prodotti sono la somma dei loro prezzi di vendita moltiplicati per le rispettive quantità vendute. Magari è banale, ma se non si capisce questo non si capisce assolutamente niente.</p>
 <p>Notiamo anche che <span class="math inline">\(R\)</span> è una funzione lineare per cui</p>
 <p>se imponiamo <span class="math inline">\(R_i = P_i * Q_i\)</span></p>
 <p>allora <span class="math inline">\(R = \sum{R_i}\)</span></p>
