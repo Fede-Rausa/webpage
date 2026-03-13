@@ -1,0 +1,156 @@
+[
+  {
+    "objectID": "projects.html",
+    "href": "projects.html",
+    "title": "Projects",
+    "section": "",
+    "text": "Here are some apps I have realized. How to turn pleasure in pain.\n\nTools written in Python\n\nBasicBusiness : a .exe used to manage sales in an improvised restaurant. Used in real life, Thermal Printer compatible.\n\n\n&lt;a href=\"https://freddocastoro.itch.io/cassapaniniexe\"&gt;Basic Business (version 8.0) by freddocastoro&lt;/a&gt;\n\n\nBetter Image : a streamlit app to apply special filters to images.\nKalman Video Denoiser : a streamlit app to denoise a video in real time from a camera (webcam or FPV camera video feed) using a simple and efficient adaptive Kalman Filter. This app seems pretty useful for really noisy cameras (such as FPV drones real time cameras).\nInstaronno : a streamlit app to analyze a social network get from some Saronno IG users\n\n\n\nUnity Games written in C#\n\nKey vs Mickey : a two players game for mouse vs keyboard\n\n\n&lt;a href=\"https://freddocastoro.itch.io/key-vs-mickey\"&gt;Key vs Mickey by freddocastoro&lt;/a&gt;\n\n\nSaronno Legend : Explore Saronno City with Earth, maybe as a star fighter\n\n\n&lt;a href=\"https://freddocastoro.itch.io/saronno-legend\"&gt;Saronno Legend by freddocastoro&lt;/a&gt;",
+    "crumbs": [
+      "Random things",
+      "programming"
+    ]
+  },
+  {
+    "objectID": "posts/first-post.html",
+    "href": "posts/first-post.html",
+    "title": "My First Blog Post",
+    "section": "",
+    "text": "This is my first blog post using Quarto.\n\n\nQuarto makes it easy to create beautiful websites."
+  },
+  {
+    "objectID": "posts/first-post.html#getting-started",
+    "href": "posts/first-post.html#getting-started",
+    "title": "My First Blog Post",
+    "section": "",
+    "text": "Quarto makes it easy to create beautiful websites."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Personal webpage of Federico Rausa",
+    "section": "",
+    "text": "Welcome\nHi! I’m Fede, and I love data science, old music and good books.\nI have a bachelor degree in economics and a master in statistics.\nI’m also good at programming (my favourite languages are R, Python and Arduino).\nIf You want to know me, here are my contacts.\nMy academic background is resumend here while my life background is here.\nIf You have free time (I hope that) and need a good book, I suggest these.\nIf You wish to play a musical instrument but You are lazy, I suggest the ukulele.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "things to say",
+    "section": "",
+    "text": "Data Analysis with Python\n\n\nExploring data analysis techniques with Python\n\n\n\n\n\nJan 15, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nMy First Blog Post\n\n\nMy first blog post on the new website\n\n\n\n\n\nJan 1, 2024\n\n\n\n\n\nNo matching items",
+    "crumbs": [
+      "Posts"
+    ]
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About Me",
+    "section": "",
+    "text": "My contacts are here.\nMy CV can be dowloaded from here:\n\neng\nita",
+    "crumbs": [
+      "About me"
+    ]
+  },
+  {
+    "objectID": "about.html#cv-and-contacts",
+    "href": "about.html#cv-and-contacts",
+    "title": "About Me",
+    "section": "",
+    "text": "My contacts are here.\nMy CV can be dowloaded from here:\n\neng\nita",
+    "crumbs": [
+      "About me"
+    ]
+  },
+  {
+    "objectID": "about.html#personal-background",
+    "href": "about.html#personal-background",
+    "title": "About Me",
+    "section": "Personal Background",
+    "text": "Personal Background\nI live in Saronno, a small but populous city between Milan and Varese, since I was born. However my family is for the most from Genova, where I try to go every time I can (sadly very few times, I’m not a good traveler).\nSince childhood I have a deep passion for books.\nI think that the best way to describe myself is to cite my favourite authors: Dostoevskij, Tolkien, H.Hesse, C.S.Lewis . However, my main interests go around data science topics (specifically computational efficiency and non tabular data structures, such as time series, graphs, texts, etc) and economics (I actually think that the best way to describe economic phenomena in a qualitative way is using statistical methods).\nI have many passions now: music, game development, robotics, trading, law, literature, macroeconomics, microeconomics, computational efficiency, and many many others.\nSince in the best case I human like me can live just 100 years, and You have to make a choice in your life, and I didn’t want to give up to anything, I decide to go for Statistics (the JOLLY of knowledge). My original passion was maybe more about logic, but I realized that statistics is just logic+probability, that is more spendable in life, and that is immensely more useful.\nThere are many economists, poor guys, who have the same passion for logic and philosphy that I had, and who have then struggled studying Game Theory, thinking that they could get something useful from that (I obviously gave 3 exams of Game Theory).\nSince a statistician withouth a PC is pretty useless in these years, I also developed a natural passion for computer sciences. I’m actually son of two ICT workers, so it came almost naturally for me to learn programming languages.\nNow my road is mapped: always learn and be better. Time is the last enemy of happiness.",
+    "crumbs": [
+      "About me"
+    ]
+  },
+  {
+    "objectID": "about.html#academic-background",
+    "href": "about.html#academic-background",
+    "title": "About Me",
+    "section": "Academic Background",
+    "text": "Academic Background\nI have a master degree in Statistics and a bachelor degree in Economics. During my Thesis project for the master, I had the opportunity to develop a topic model for the python package OCTIS, and grow my NLP knowledge.\nThe main activities of my academic years are here.",
+    "crumbs": [
+      "About me"
+    ]
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "About Me",
+    "section": "Education",
+    "text": "Education\n\nDegree in Statistical and economics sciences, University of Milan - Bicocca (2025)\nDegree in Economics and Management, University of Varese - Insubria (2023)\n\nI have done the High School of S.M. Legnani, in Saronno. I didn’t learn latin, and maybe sometimes I think that could be a good way thing to know, but I’m happy anyway. Many people say that it opens your mind, but I don’t think that the same people knows at least what is python. At the same High School, I also written for the School Newspaper, Inpuntadipenna, that is active yet today. That was a lovely experience. My articles were published here, but then they moved the new website here.",
+    "crumbs": [
+      "About me"
+    ]
+  },
+  {
+    "objectID": "about.html#computer-skills",
+    "href": "about.html#computer-skills",
+    "title": "About Me",
+    "section": "Computer Skills",
+    "text": "Computer Skills\n\nProgramming: Python, R, SQL, C# for Unity, C for Arduino\nStatistical Tools: KNIME, SPSS, PowerBI, Tableau\nSoftwares: VScode, Office (Excel, Word, PowerPoint), Unity Engine",
+    "crumbs": [
+      "About me"
+    ]
+  },
+  {
+    "objectID": "about.html#languages",
+    "href": "about.html#languages",
+    "title": "About Me",
+    "section": "Languages",
+    "text": "Languages\n\nEnglish B2\nNative Italian",
+    "crumbs": [
+      "About me"
+    ]
+  },
+  {
+    "objectID": "contacts.html",
+    "href": "contacts.html",
+    "title": "contacts",
+    "section": "",
+    "text": "Get in Touch! I will be happy to know you!\n\nEmail: federico.rrausa@gmail.com\nLinkedIn\nGitHub\nKaggle",
+    "crumbs": [
+      "Contacts"
+    ]
+  },
+  {
+    "objectID": "mybooks.html",
+    "href": "mybooks.html",
+    "title": "Libri consigliati",
+    "section": "",
+    "text": "Autori\nogni loro libro è bello\n\nC.S. Lewis\nHermann Hesse\nF. Dostoevskij\nJ.R. Tolkien\nAlessandro Baricco\nAlessandro D’Avenia\nGiorgio Fontana (nato a Saronno)\nItalo Calvino\nJ. Conrad\n\n\n\nSaggi - Accademici\n\nThe data science design manual (Skiena) (in realtà è un manuale, ma molto scorrevole)\nThe Game (Baricco)\nBlack Swan (Taleb) (Un santo graal della statistica)\nEconomix (Goodwin-Burr) (in realtà è un fumetto, ma abbastanza complicato)\nLa dama con l’ermellino (Pizzagalli)\n\n\n\nNarrativa\noltre a quelli di cui sopra\n\nLa Valle dell’Eden (Steinback)\nIl nome della rosa (Eco)\nBaudolino (Eco)\nIl buio oltre la siepe\nSenza famiglia\nRacconti del terrore (E.A.Poe)\nIl fu Mattia Pascal (Pirandello)\nL’esclusa (Pirandello)\n1, 0 e 100K (Pirandello)\nNovelle per un anno (Pirandello)\nLa luna e i falò (Pavese)\nLa casa in collina (Pavese)\nSuite francese\n1984 (Orwell)\nLa fattoria degli animali (Orwell)\nLe finestre di fronte (Simenon)\nBetty (Simenon)\nLa grotta di cristallo\nIl Maestro e Margherita (Bulgakov)\nCuore di cane (Bulgakov)\nIl mio amico Yeller (Il primo libro che ho letto)\nLe Indie nere (Il secondo libro che ho letto)\nIl giovane Holden\nFra me e te\nLe avventure di Huckleberry Finn (Twain)\nLe avventure di Tom Sawyer (Twain)\nI ragazzi di via Pal\n\n\n\nBiografie di guerra\n\nNiente di nuovo sul fronte occidentale (Remarque)\n100000 gavette di ghiaccio\nOmaggio alla Catalogna (Orwell)\n\n\n\nGialli\n\n10 piccoli indiani (Christie)\nogni libro su Poirot (Christie)\nIl segno dei 4 (Doyle)\nUno studio in rosso (Doyle)\nIl Mastino dei Baskerville (Doyle)\nIl faraglione cavo (Leblanc)",
+    "crumbs": [
+      "Random things",
+      "libri da leggere"
+    ]
+  },
+  {
+    "objectID": "posts/second-post.html",
+    "href": "posts/second-post.html",
+    "title": "Data Analysis with Python",
+    "section": "",
+    "text": "Data Analysis Techniques\nContent for your second post…"
+  },
+  {
+    "objectID": "statpapers.html",
+    "href": "statpapers.html",
+    "title": "Statistical Notes",
+    "section": "",
+    "text": "Here are few statistical writings I have done during my academic years:\n\npapers:\n\nItalian:\n\nMaster thesis : Boltzmann Machines for Topic Modeling.\nBachelor thesis : Cluster Algorithms for Sector Analysis\nAnalisi di concentrazione del settore dei trasporti : exam project for Economia e Dinamica Industriale (Master)\nAirlines delay : exam projects for Fondamenti di data analytics (Bachelor)\n\n\n\nEnglish:\n\nMilan House Prices : fourth place on a private Kaggle competition, 50 participants. Projects for the exam of Data Mining (Master)\n\n\n\n\npresentations:\n\nItalian:\n\nMaster thesis presentation : Boltzmann Machines for Topic Modeling.\nSTMicroelectronics Lab Data Challenge : Solution proposed for the Lab Data Challenge proposed by STM. The aim was to predict the presence of a person in a room from the wifi noise frequencies coming from the router. (Master)\nProposta di Fedelity Card per clienti di profumerie: Exam project for Analisi di mercato quantitative (Master)\nSegmentazione dei consumatori del mercato vestiario: Exam project for Analisi di mercato quantitative (Master)\nAnalisi di concentrazione del settore dei trasporti: exam project for Economia e Dinamica Industriale (Master)\nSegmentazione caratteriale dei manager: Exam project for Statistica Aziendale (Master). An example usage of the software KNIME.\nAlberi di decisione per l’imputazione dei dati mancanti nei questionari: Exam project for Statistica Aziendale (Master). An example usage of the software KNIME.\nPCA per l’analisi dei questionari: Exam project for Statistica Aziendale (Master). An example usage of the software KNIME.\n\n\n\nEnglish:\n\nAutomated Essay Scoring : for the exam of Machine Learning (Master), based on text mining task\n\n\n\n\nnotebooks:\n\nItalian:\n\nSTMicroelectronics Lab Data Challenge : Solution proposed for the Lab Data Challenge proposed by STM. The aim was to predict the presence of a person in a room from the wifi noise frequencies coming from the router. (Master)\nRetina Cancer : first place solution on a private Kaggle competition, 8 participants, for the exam of Statistical Learning (Master)\nPOS tagger : Project made for the exam of Statistical Learning (Master). It is not a good way to train a POS tagger. Maybe If You want to train a neural network You should use directly python, and don’t switch to Keras for R.\nAnalisi di concentrazione del settore dei trasporti: exam project for Economia e Dinamica Industriale (Master)\nStatistica Spaziale in R: R code notes from Spatial Statistics (Master)\n\n\n\nEnglish:\n\nKernel Clustering for text : If You try to apply common clustering algorthms to Bag of Words Text representations, You will obtain random clusters. However, when I use Kernel distances with Kmeans for the Italian Constitution articles, I get pretty good results.\nPytorch MNIST : a very simple exercise to train a neural network with the most common python library in the most classical and simple task (written digit classification from images).",
+    "crumbs": [
+      "Random things",
+      "statistics"
+    ]
+  }
+]

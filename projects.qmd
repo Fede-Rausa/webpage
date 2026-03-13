@@ -1,0 +1,36 @@
+---
+title: "Projects"
+---
+
+
+Here are some apps I have realized. How to turn pleasure in pain.
+
+### Tools written in Python
+
+- BasicBusiness : a .exe used to manage sales in an improvised restaurant. Used in real life, Thermal Printer compatible.
+
+<iframe frameborder="0" src="https://itch.io/embed/2960851" width="552" height="167"><a href="https://freddocastoro.itch.io/cassapaniniexe">Basic Business (version 8.0) by freddocastoro</a></iframe>
+
+
+- [Better Image](https://betterimagedenoisers.streamlit.app/) : a streamlit app to apply special filters to images.
+
+- [Kalman Video Denoiser](https://fpvkalmanvideodenoiser.streamlit.app/) : a streamlit app to denoise a video in real time from a camera (webcam or FPV camera video feed) using a simple and efficient adaptive Kalman Filter. This app seems pretty useful for really noisy cameras (such as FPV drones real time cameras).
+
+- [Instaronno](https://instaronno-saronnoignetworks.streamlit.app/) : a streamlit app to analyze a social network get from some Saronno IG users
+
+
+
+### Unity Games written in C\#
+
+- Key vs Mickey : a two players game for mouse vs keyboard
+
+<iframe frameborder="0" src="https://itch.io/embed/3130103" width="552" height="167"><a href="https://freddocastoro.itch.io/key-vs-mickey">Key vs Mickey by freddocastoro</a></iframe>
+
+
+
+- Saronno Legend : Explore Saronno City with Earth, maybe as a star fighter
+
+<iframe frameborder="0" src="https://itch.io/embed/2563480?border_width=0" width="550" height="165"><a href="https://freddocastoro.itch.io/saronno-legend">Saronno Legend by freddocastoro</a></iframe>
+
+
+

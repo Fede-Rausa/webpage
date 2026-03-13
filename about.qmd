@@ -1,0 +1,66 @@
+---
+title: "About Me"
+format:
+  html:
+    toc: true
+    sidebar: true
+---
+
+## CV and contacts
+
+My contacts are [here](contacts.qmd).
+
+My CV can be dowloaded from here:
+
+- [eng](files_folder\CV_FR_eng_friv.pdf)
+
+- [ita](files_folder\CV_FR_friv.pdf)
+
+
+## Personal Background
+
+I live in Saronno, a small but populous city between Milan and Varese, since I was born. However my family is for the most from Genova, where I try to go every time I can (sadly very few times, I'm not a good traveler).
+
+Since childhood I have a deep passion for books. 
+
+I think that the best way to describe myself is to cite my favourite authors: Dostoevskij, Tolkien, H.Hesse, C.S.Lewis .
+However, my main interests go around data science topics (specifically computational efficiency and non tabular data structures, such as time series, graphs, texts, etc) and economics (I actually think that the best way to describe economic phenomena in a qualitative way is using statistical methods).
+
+I have many passions now: music, game development, robotics, trading, law, literature, macroeconomics, microeconomics, computational efficiency, and many many others. 
+
+Since in the best case I human like me can live just 100 years, and You have to make a choice in your life, and I didn't want to give up to anything, I decide to go for Statistics (the JOLLY of knowledge). My original passion was maybe more about logic, but I realized that statistics is just logic+probability, that is more spendable in life, and that is immensely more useful.
+
+There are many economists, poor guys, who have the same passion for logic and philosphy that I had, and who have then struggled studying Game Theory, thinking that they could get something useful from that (I obviously gave 3 exams of Game Theory). 
+
+Since a statistician withouth a PC is pretty useless in these years, I also developed a natural passion for computer sciences.
+I'm actually son of two ICT workers, so it came almost naturally for me to learn programming languages.
+
+Now my road is mapped: always learn and be better. Time is the last enemy of happiness.
+
+
+## Academic Background
+
+I have a master degree in Statistics and a bachelor degree in Economics.
+During my Thesis project for the master, I had the opportunity to develop a topic model for the python package OCTIS, and grow my NLP knowledge.
+
+The main activities of my academic years are [here](statpapers.qmd).
+
+## Education
+
+- **Degree** in Statistical and economics sciences, University of Milan - Bicocca (2025)
+- **Degree** in Economics and Management, University of Varese - Insubria  (2023)
+
+I have done the High School of S.M. Legnani, in Saronno. I didn't learn latin, and maybe sometimes I think that could be a good way thing to know, but I'm happy anyway. Many people say that it opens your mind, but I don't think that the same people knows at least what is python.
+At the same High School, I also written for the School Newspaper, Inpuntadipenna, that is active yet today. That was a lovely experience. My articles were published [here](https://inpuntadipennaliceolegnani.wordpress.com/), but then they moved the new website [here](https://www.inpuntadipenna.org/).
+
+
+## Computer Skills
+
+- **Programming**: Python, R, SQL, C# for Unity, C for Arduino
+- **Statistical Tools**: KNIME, SPSS, PowerBI, Tableau
+- **Softwares**: VScode, Office (Excel, Word, PowerPoint), Unity Engine
+
+## Languages
+
+- **English B2**
+- **Native Italian**

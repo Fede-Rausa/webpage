@@ -1,0 +1,46 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Fede Rausa"
+  description: "personal webpage of a good boy"
+  site-url: "https://fede-rausa.github.io"
+  repo-url: "https://github.com/fede-rausa/pwp"
+  repo-actions: [edit]
+  
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - text: Home
+        href: index.qmd
+      - text: Posts
+        href: blog.qmd
+      - text: About me
+        href: about.qmd
+      - text: Contacts
+        href: contacts.qmd
+      - section: "Random things"
+        contents:
+          - href: projects.qmd
+            text: programming
+          - href: statpapers.qmd
+            text: statistics
+          - href: mybooks.qmd
+            text: libri da leggere
+
+  page-navigation: true
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    css: styles.css
+    toc: true
+    toc-depth: 2
+    toc-title: "On this page"
+    
+execute:
+  echo: false

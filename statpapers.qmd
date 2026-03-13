@@ -1,0 +1,77 @@
+---
+title: "Statistical Notes"
+---
+
+Here are few statistical writings I have done during my academic years:
+
+
+# papers:
+
+#### Italian:
+
+- [Master thesis](files_folder\LaTesi.pdf) : Boltzmann Machines for Topic Modeling.
+
+- [Bachelor thesis](files_folder\TESI_cluster_di_settore.pdf) : Cluster Algorithms for Sector Analysis
+
+- [Analisi di concentrazione del settore dei trasporti](files_folder\report_Genellini_Piazza_Rausa.pdf) : exam project for *Economia e Dinamica Industriale* (Master)
+
+- [Airlines delay](files_folder\airwaysThesis.pdf) : exam projects for *Fondamenti di data analytics* (Bachelor)
+
+#### English:
+
+- [Milan House Prices](files_folder\report_Rausa.pdf) : fourth place on a private Kaggle competition, 50 participants. Projects for the exam of *Data Mining* (Master)
+
+
+
+
+
+
+# presentations:
+
+#### Italian:
+
+- [Master thesis presentation](files_folder\presentazione_tesi2.pdf) : Boltzmann Machines for Topic Modeling.
+
+- [STMicroelectronics Lab Data Challenge](files_folder\Lab_Data_Challenge.pdf) : Solution proposed for the Lab Data Challenge proposed by STM. The aim was to predict the presence of a person in a room from the wifi noise frequencies coming from the router. (Master)
+
+- [Proposta di Fedelity Card per clienti di profumerie](files_folder\Cerea_Cislaghi_Rausa.pdf): Exam project for *Analisi di mercato quantitative* (Master)
+
+- [Segmentazione dei consumatori del mercato vestiario](files_folder\Orange_Modern_Business_Presentation.pdf): Exam project for *Analisi di mercato quantitative* (Master)
+
+- [Analisi di concentrazione del settore dei trasporti](files_folder\Indici_di_concentrazione.pptx.pdf): exam project for *Economia e Dinamica Industriale* (Master)
+
+- [Segmentazione caratteriale dei manager](files_folder\CLUSTER_ANALYSIS.pdf): Exam project for *Statistica Aziendale* (Master). An example usage of the software KNIME.
+
+- [Alberi di decisione per l'imputazione dei dati mancanti nei questionari](files_folder\Alberi_imputazione_dati_mancanti.pdf): Exam project for *Statistica Aziendale* (Master). An example usage of the software KNIME.
+
+- [PCA per l'analisi dei questionari](files_folder\ANALISI_DELLE_COMPONENTI_PRINCIPALI.pdf): Exam project for *Statistica Aziendale* (Master). An example usage of the software KNIME.
+
+
+### English:
+
+- [Automated Essay Scoring](files_folder\progetto_AES.pdf) : for the exam of *Machine Learning* (Master), based on text mining task
+
+
+
+# notebooks:
+
+#### Italian:
+
+- [STMicroelectronics Lab Data Challenge](files_folder\convolutional_donut.html) : Solution proposed for the Lab Data Challenge proposed by STM. The aim was to predict the presence of a person in a room from the wifi noise frequencies coming from the router. (Master)
+
+- [Retina Cancer](https://www.kaggle.com/code/federicorausa/drd-solution) : first place solution on a private Kaggle competition, 8 participants, for the exam of *Statistical Learning* (Master)
+
+- [POS tagger](files_folder\italian_pos_tagging.html) : Project made for the exam of *Statistical Learning* (Master). It is not a good way to train a POS tagger. Maybe If You want to train a neural network You should use directly python, and don't switch to Keras for R.
+
+- [Analisi di concentrazione del settore dei trasporti](files_folder\Genellini-Piazza-Rausa.html): exam project for *Economia e Dinamica Industriale* (Master)
+
+- [Statistica Spaziale in R](files_folder\apppuntiStatisticaSpaziale.html): R code notes from *Spatial Statistics* (Master)
+
+
+
+
+#### English:
+
+- [Kernel Clustering for text](https://www.kaggle.com/code/federicorausa/italian-constitution-kernel) : If You try to apply common clustering algorthms to Bag of Words Text representations, You will obtain random clusters. However, when I use Kernel distances with Kmeans for the Italian Constitution articles, I get pretty good results.
+
+- [Pytorch MNIST](https://www.kaggle.com/code/federicorausa/backprop-in-pytorch) : a very simple exercise to train a neural network with the most common python library in the most classical and simple task (written digit classification from images).

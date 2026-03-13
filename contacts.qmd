@@ -1,0 +1,15 @@
+---
+title: "contacts"
+format:
+  html:
+    toc: true
+page-layout: article
+---
+
+Get in Touch! I will be happy to know you!
+
+- **Email**: federico.rrausa@gmail.com
+- [**LinkedIn**](https://www.linkedin.com/in/federico-rausa-71262420b/)
+- [**GitHub**](https://github.com/Fede-Rausa)
+- [**Kaggle**](https://www.kaggle.com/federicorausa)
+

@@ -1,0 +1,126 @@
+---
+title: "Libri consigliati"
+format:
+  html:
+    toc: true
+    sidebar: true
+---
+
+
+### Autori
+*ogni loro libro è bello*
+
+- C.S. Lewis
+
+- Hermann Hesse
+
+- F. Dostoevskij
+
+- J.R. Tolkien
+
+- Alessandro Baricco
+
+- Alessandro D'Avenia
+
+- Giorgio Fontana (nato a Saronno)
+
+- Italo Calvino
+
+- J. Conrad
+
+
+### Saggi - Accademici
+
+- The data science design manual (Skiena) (in realtà è un manuale, ma molto scorrevole)
+
+- The Game (Baricco)
+
+- Black Swan (Taleb) (Un santo graal della statistica)
+
+- Economix (Goodwin-Burr) (in realtà è un fumetto, ma abbastanza complicato)
+
+- La dama con l'ermellino (Pizzagalli)
+
+
+
+### Narrativa
+*oltre a quelli di cui sopra*
+
+- La Valle dell'Eden (Steinback)
+
+- Il nome della rosa (Eco)
+
+- Baudolino (Eco)
+
+- Il buio oltre la siepe
+
+- Senza famiglia
+
+- Racconti del terrore (E.A.Poe)
+
+- Il fu Mattia Pascal (Pirandello)
+
+- L'esclusa (Pirandello)
+
+- 1, 0 e 100K (Pirandello)
+
+- Novelle per un anno (Pirandello)
+
+- La luna e i falò (Pavese)
+
+- La casa in collina (Pavese)
+
+- Suite francese
+
+- 1984 (Orwell)
+
+- La fattoria degli animali (Orwell)
+
+- Le finestre di fronte (Simenon)
+
+- Betty (Simenon)
+
+- La grotta di cristallo
+
+- Il Maestro e Margherita (Bulgakov)
+
+- Cuore di cane (Bulgakov)
+
+- Il mio amico Yeller (Il primo libro che ho letto)
+
+- Le Indie nere (Il secondo libro che ho letto)
+
+- Il giovane Holden
+
+- Fra me e te
+
+- Le avventure di Huckleberry Finn (Twain)
+
+- Le avventure di Tom Sawyer (Twain)
+
+- I ragazzi di via Pal
+
+
+### Biografie di guerra
+
+- Niente di nuovo sul fronte occidentale (Remarque)
+
+- 100000 gavette di ghiaccio
+
+- Omaggio alla Catalogna (Orwell)
+
+
+
+### Gialli
+
+- 10 piccoli indiani (Christie)
+
+- ogni libro su Poirot (Christie)
+
+- Il segno dei 4 (Doyle)
+
+- Uno studio in rosso (Doyle)
+
+- Il Mastino dei Baskerville (Doyle)
+
+- Il faraglione cavo (Leblanc)

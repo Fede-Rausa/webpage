@@ -1,0 +1,11 @@
+---
+title: "Data Analysis with Python"
+date: "2024-01-15"
+categories: [Data Science]
+tags: [python, pandas, visualization]
+description: "Exploring data analysis techniques with Python"
+---
+
+# Data Analysis Techniques
+
+Content for your second post...

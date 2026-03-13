@@ -1,0 +1,7 @@
+---
+title: "things to say"
+listing:
+  contents: posts
+---
+
+

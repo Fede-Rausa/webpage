@@ -1,0 +1,56 @@
+
+
+per vedere l'anteprima del tuo sito:
+
+cd mydirectory
+quarto render
+
+Poi vai nella cartella _site e apri index.html
+
+
+Per commentare il codice YAML puoi usare #. In Vscode le shortcut ctrl+K e ctrl+U funzionano.
+
+
+Guida sulla navigation: https://quarto.org/docs/websites/website-navigation.html
+
+Per la navbar navigation, aggiungi in _quarto.yml:
+
+website:
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: blog.qmd
+        text: Posts
+      - href: about.qmd
+        text: About me
+      - text: "random things"
+        menu:
+          - href: projects.qmd
+            text: statistics
+          - href: publications.qmd
+            text: programming
+
+    page-navigation: true
+
+
+Per la sidebar invece:
+
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - text: Home
+        href: index.qmd
+      - text: Posts
+        href: blog.qmd
+      - text: About me
+        href: about.qmd
+      - section: "random things"
+        contents:
+          - href: projects.qmd
+            text: statistics
+          - href: publications.qmd
+            text: programming
+
+
