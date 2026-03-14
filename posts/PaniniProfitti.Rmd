@@ -1,6 +1,6 @@
 ---
 title: "Panini e Profitti"
-author: "Federico Rausa"
+author: "FR"
 date: "2024-03-05"
 categories: [Economics, Optimization, R]
 tags: [Paninoteca, R]

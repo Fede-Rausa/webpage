@@ -1,0 +1,1078 @@
+
+---
+title: "Statistiche della paninoteca"
+author: "FR"
+date: "2025-12-23"
+categories: [Economics, Optimization, R]
+tags: [Paninoteca, R]
+format:
+  html:
+    code-fold: true
+execute:
+  echo: true
+---
+
+# report delle vendite della paninoteca
+
+Si riportano le analisi delle vendite della paninoteca dell'oratorio Regina Pacis
+di Saronno, negli anni dal 2021 al 2025. 
+Tale servizio si svolge tipicamente in una settimana di fine settembre.
+Il dataset raccolto, storico_vendite_2021-2025.csv, è disponibile su github.
+Le analisi sono svolte su R, e il codice è mostrato per completezza, ma non è 
+il principale oggetto di interesse di questo rapporto
+
+
+
+
+
+```{r}
+
+library(readr)
+library(dplyr)
+
+df = read_csv2('storico_vendite_2021-2025.csv')
+
+summary(df)
+
+```
+
+# statistiche univariate
+
+Le variabili presenti nel dataset sono 5 (colonne), per 288 osservazioni (righe).
+Ogni osservazione è una combinazione di un prodotto venduto nella sera di un anno
+in un giorno della settimana a un dato prezzo.
+
+Ecco le prime 5 righe del dataset, a titolo di esempio:
+
+```{r}
+head(df, 5)
+```
+
+
+
+Descrizione sintetica di ogni variabile:
+
+- Q : quantità venduta (conteggio dei piatti venduti nell'arco della giornata)
+
+- P : prezzo unitario di vendita
+
+- year : numero dell'anno corrente
+
+- weekday : testo di tre lettere indicante il giorno della settimana (Lun-Dom). Viene codificata come una serie di 6 dummy (non 7), ovvero 6 variabili ciascuna pari a 1 se ci troviamo in quel giorno, 0 altrimenti.
+
+- prod : tipo di prodotto/piatto venduto (panino vegetariano, patatine, birra ecc).
+questa variabile può essere convertita in dummy, ma è sporca e richiede del preprocessing, in quanto in anni diversi panini simili hanno avuto nomi simili. Ad esempio, si può decidere di accorpare in un'unica classe le categorie hamburger, double burger e hamburger suino, anche se rappresentano prodotti diversi.
+
+- n_day_sells : somma di tutte le quantità vendute di tutti i piatti nel giorno e nell'anno considerato.
+
+- n_day_clients : numero complessivo di clienti che hanno acquistato qualsiasi cosa in quel giorno in paninoteca. Questo dato era mancante per l'anno 2022, e per quell'anno è stato imputato con una regressione lineare basata sulle variabili weekday e n_day_sells (la quale si può considerare la migliore proxy)
+
+
+## prodotti venduti
+
+I prodotti venduti, e il numero di osservazioni della quantità venduta presenti per ciascuno, sono:
+
+```{r}
+df$prod[df$prod=='piadine nutella'] = 'piadina_nutella'
+table(df$prod)
+```
+Si aggiunge qui una sovra-classe, che dice che tipo di cibo si sta vendendo. 
+Soggettivamente, ritengo che queste aggregazioni siano le più sensate: panini, contorni, bibite e dolci.
+
+```{r}
+
+library(forcats)
+panini = c( "salamella",  "cotto_e_fontina",  "vegetariano"     ,   
+  "speck" ,  "hot_dog" , "speck_e_tomino"  ,    "speck_e_brie"       ,
+"pancetta_e_scamorza", "hamburger_suino"  , "hamburger_manzo" , "double_burger" )
+
+contorni = c("patatine", "nuggets", "anelli_cipolla", "panzerotti", "mozza", "verdure_grigliate")
+
+bibite = c("birra" , "acqua", "spritz", "virgin_mojito" ,"virgin_pina_colada" , "spritz_analcolico",   'bibite')
+
+dolci = c("anguria" ,"melone" , "churros", "piadina_nutella")
+
+classi_cibo = ifelse(df$prod %in% panini, 'panini', 
+              ifelse(df$prod %in% contorni, 'contorni',
+              ifelse(df$prod %in% bibite, 'bibite', 
+                     'dolci')))
+              
+df$food_type = classi_cibo
+
+table(df$food_type)
+
+```
+
+
+## giorni e anni
+
+Analoga esplorazione possiamo fare per i giorni e per gli anni.
+
+```{r}
+table(df$weekday)
+```
+
+```{r}
+table(df$year)
+```
+
+
+## analisi dei prezzi
+
+```{r}
+summary(df$P)
+```
+```{r}
+hist(df$P, main='prezzi fatti in Repax dal 2021 al 2025')
+```
+
+
+
+## analisi delle quantità vendute
+
+La variabile Q si presenta distribuita come Gamma o Poisson. Se la si vuole prevedere
+è conveniente modellizzarla come log-normale, ovvero trasformarla con logaritmo.
+Siccome in certi casi assume valore 0, si preferisce adottare la trasformazione
+log(x+1).
+In questo modo, è più facile che Q assuma una relazione lineare con le altre variabili,
+e quindi che un modello di previsione preveda bene log(Q+1).
+
+```{r}
+Q = df$Q
+summary(Q)
+```
+
+```{r}
+par(mfrow=c(1,3))
+hist(Q, main = 'distribuzione della quantità venduta', cex.main=0.9, breaks=50)
+hist(log(1+Q), main = 'distribuzione della quantità venduta sotto logaritmo', cex.main=0.8, breaks=50)
+boxplot(log(1+Q), main='boxplot di log(1+Q)')
+
+```
+
+
+
+# analisi bivariata di P e Q
+
+Spesso assumiamo che esista una relazione inversa tra prezzo e quantità domandata.
+In realtà molto spesso veniamo smentiti.
+
+
+```{r}
+plot(df$P, df$Q, xlab='prezzo', ylab='vendite in una sera di un prodotto', main='P vs Q')
+#regressione lineare semplice
+abline(lm(Q~P, data=df), col='red', lwd=2)
+#polinomio di grado 5
+mylm = lm(Q~poly(P,5), data=df)
+lines(df$P[order(df$P)], fitted(mylm)[order(df$P)] , col='orange', lwd=2)
+#spline di grado 1 con 5 nodi
+mylm = lm(log(Q+1)~P + (P>1)*P + (P>2)*P + (P>3)*P + (P>4)*P + (P>5)*P, data=df)
+lines(df$P[order(df$P)], fitted(mylm)[order(df$P)] , col='blue', lwd=2)
+```
+
+In questo caso l'associazione sembra terribilmente non lineare.
+Se si prova a fare la trasformazione con logaritmo:
+
+
+```{r}
+plot(df$P, log(df$Q+1), xlab='prezzo', ylab='log delle vendite in una sera di un prodotto', main='P vs log(Q+1)')
+#regressione lineare semplice
+abline(lm(log(Q+1)~P, data=df), col='red', lwd=2)
+#polinomio di grado 5
+mylm = lm(log(Q+1)~poly(P,5), data=df)
+lines(df$P[order(df$P)], fitted(mylm)[order(df$P)] , col='orange', lwd=2)
+#spline di grado 1 con 5 nodi
+mylm = lm(log(Q+1)~P + (P>1)*P + (P>2)*P + (P>3)*P + (P>4)*P + (P>5)*P, data=df)
+lines(df$P[order(df$P)], fitted(mylm)[order(df$P)] , col='blue', lwd=2)
+
+
+```
+
+La relazione sembra ancora non lineare, ma si nota che la relazione tende a essere negativa per 
+prezzi maggiori di 4, assente o quasi per prezzi inferiori.
+Di sicuro non è possibile prevedere adeguatamente la quantità domandata basandosi esclusivamente sul prezzo.
+
+
+
+
+# analisi bivariata di prod e food_type con Q
+
+
+Di seguito, l'analisi bivariata tra la variabile Q e le altre verrà fatta senza usare la trasformazione logaritmo, per essere più interpretabile. L'addestramento del modello per prevederla invece utilizzerà tale trasformazione.
+
+
+## analisi boxplot
+
+Questo grafico è ciò che si vorrebbe comprendere in questo capitolo:
+
+```{r}
+library(ggplot2)
+
+df %>% ggplot(aes(x=prod, y=Q, fill=prod)) + 
+  geom_boxplot() + 
+  ggtitle('quantità venduta vs prodotti') + 
+  theme_bw()
+
+
+```
+
+Non è facilissimo interpretarlo. Conviene spezzarlo nelle sue componenti.
+
+
+```{r}
+
+df  %>% ggplot(aes(x=food_type, y=Q, fill=food_type)) + 
+  geom_boxplot() + 
+  ggtitle('quantità venduta vs tipi di prodotti') + 
+  theme_bw()
+
+```
+
+conviene rivedere lo stesso grafico per log(Q+1), per stabilire qual'è la vera gerarchia tra classi con Q maggiore o minore.
+
+
+```{r}
+
+df %>% filter() %>% ggplot(aes(x=food_type, y=log(Q+1), fill=food_type)) + 
+  geom_boxplot() + 
+  ggtitle('quantità venduta sotto log vs tipi di prodotti') + 
+  theme_bw()
+
+```
+
+Come si distribuiscono queste quantità per ogni singola classe di prodotto?
+
+
+```{r}
+df %>% filter(food_type=='panini') %>% ggplot(aes(x=prod, y=Q, fill=prod)) + 
+  geom_boxplot() + 
+  ggtitle('quantità venduta vs panini') + 
+  theme_bw()
+
+```
+
+
+
+```{r}
+
+df %>% filter(food_type=='contorni') %>% ggplot(aes(x=prod, y=Q, fill=prod)) + 
+  geom_boxplot() + 
+  ggtitle('quantità venduta vs contorni') + 
+  theme_bw()
+
+```
+```{r}
+df %>% filter(food_type=='bibite') %>% ggplot(aes(x=prod, y=Q, fill=prod)) + 
+  geom_boxplot() + 
+  ggtitle('quantità venduta vs bibite') + 
+  theme_bw()
+
+```
+Si noti che le ultime 3 bibite sono state vendute una sera sola.
+
+```{r}
+df %>% filter(food_type=='dolci') %>% ggplot(aes(x=prod, y=Q, fill=prod)) + 
+  geom_boxplot() + 
+  ggtitle('quantità venduta vs dolci') + 
+  theme_bw()
+
+```
+Si noti che la classe bibite all'interno di bibite va letta come altre bibite.
+L'anguria è promettente in alcune stagioni. Non è ancora stata inserita nel dataset la variabile mese, che potrebbe spiegare che certi prodotti vanno meglio in certi periodi dell'anno.
+
+
+
+
+## analisi tabelle delle statistiche descrittive raggruppate
+
+I boxplot sono esteticamente gradevoli ma a volte abbiamo bisogno di informazioni di dettaglio.
+
+Ecco le statistiche descrittive per ogni prodotto della quantità giornaliera venduta:
+
+
+```{r}
+
+tab = df %>% group_by(prod) %>%
+  summarise(min = min(Q), q25=round(quantile(Q, 0.25)) , median=round(median(Q)), 
+            mean = round(mean(Q)), q75=round(quantile(Q, 0.75)), max=max(Q),  
+            std_dev = round(sd(Q)), n = n()) %>%
+  as.data.frame() 
+
+
+print.data.frame(tab)
+```
+
+
+
+Ecco il dataset aggregato sulle quantità vendute per tipo di prodotto
+
+```{r}
+tab = df %>% aggregate(Q~food_type+weekday+year, FUN=sum)
+
+tab
+```
+
+
+
+Ecco le statistiche descrittive per ogni tipo di prodotto della quantità giornaliera venduta:
+
+```{r}
+
+tab = tab %>% group_by(food_type) %>%
+  summarise(min = min(Q), q25=round(quantile(Q, 0.25)) , median=round(median(Q)), 
+            mean = round(mean(Q)), q75=round(quantile(Q, 0.75)), max=max(Q),  
+            std_dev = round(sd(Q)), n = n()) %>%
+  as.data.frame() 
+
+
+print.data.frame(tab)
+```
+
+
+# analisi bivariata di weekday con Q
+
+Ripeto le stesse analisi fatte prima, ma sui giorni della settimana.
+
+
+Si ricorda che la variabile n_day_sells è semplicemente Q aggregato come somma rispetto ai prodotti, ovvero è il numero totale di prodotti venduti in un anno e in una sera, di qualsiasi tipo.
+Inoltre la variabile n_day_clients è molto correlata con n_day_sells.
+
+```{r}
+
+df %>% mutate(weekday = factor(weekday, levels=c('lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom')))%>% 
+  ggplot(aes(x=weekday, y=n_day_sells, fill=weekday)) + 
+  geom_boxplot() + 
+  ggtitle('quantità venduta totale vs giorni della settimana') + 
+  theme_bw()
+```
+Si vede che se il numero complessivo di ordini in certi giorni della settimana è ben confinato in un intervallo.
+
+
+```{r}
+
+df %>% mutate(weekday = factor(weekday, levels=c('lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom')))%>% 
+  ggplot(aes(x=weekday, y=n_day_clients, fill=weekday)) + 
+  geom_boxplot() + 
+  ggtitle('numero di clienti vs giorni della settimana') + 
+  theme_bw()
+```
+
+
+nel dettaglio, la distribuzione del totale delle vendite:
+
+```{r}
+
+tab = df %>% mutate(weekday = factor(weekday, levels=c('lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom')))%>%
+  group_by(weekday) %>%
+  summarise(min = min(n_day_sells), q25=round(quantile(n_day_sells, 0.25)) , median=round(median(n_day_sells)), 
+            mean = round(mean(n_day_sells)), q75=round(quantile(n_day_sells, 0.75)), max=max(n_day_sells),  
+            std_dev = round(sd(n_day_sells)), n = n()) %>%
+  as.data.frame() 
+
+
+cat('summary of n_day_sells by weekday')
+cat('\n')
+cat('\n')
+print.data.frame(tab)
+
+```
+
+
+
+nel dettaglio, la distribuzione del numero di clienti:
+
+```{r}
+
+tab = df %>% mutate(weekday = factor(weekday, levels=c('lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom')))%>%
+  group_by(weekday) %>%
+  summarise(min = min(n_day_clients), q25=round(quantile(n_day_clients, 0.25)) , median=round(median(n_day_clients)), 
+            mean = round(mean(n_day_clients)), q75=round(quantile(n_day_clients, 0.75)), max=max(n_day_clients),  
+            std_dev = round(sd(n_day_clients)), n = n()) %>%
+  as.data.frame() 
+
+
+cat('summary of n_day_clients by weekday')
+cat('\n')
+cat('\n')
+print.data.frame(tab)
+
+```
+
+
+# relazione tra numero dei clienti e totale delle vendite
+
+Si vede che n_day_clients e n_day_sells sono molto correlati.
+Ma qual'è il numero di prodotti pro capite acquistato dai clienti?
+Posso vedere il loro rapporto come un indice giornaliero, e quindi studiarne la distribuzione
+
+```{r}
+
+df = df %>% mutate(sells_clients_ratio = n_day_sells/n_day_clients)
+
+
+summary(df$sells_clients_ratio)
+
+```
+
+```{r}
+hist(df$sells_clients_ratio, main='numero di piatti pro capite (n_day_sells/n_day_clients)', breaks=20)
+```
+
+
+Si può quindi dire che in generale un cliente mangia tra i 2 e i 4 prodotti in una sera.
+La media è 2.6, per cui se si conosce il numero di clienti si sa che più o meno si avranno 2.6 volte lo stesso numerod
+prodotti acquistati.
+
+Questo è il loro rapporto, ma forse una relazione lineare, con un termine di intercetta, potrebbe descrivere meglio questa relazione.
+Utilizzo allora due regressioni lineari per prevedere n_day_sells e n_day_clients, e dire se questo rapporto è affidabile o meno (è affidabile se il modello senza intercetta funziona meglio di quello con).
+
+```{r}
+reg_ratio = lm(n_day_sells ~ n_day_clients + 0, data=df)
+summary(reg_ratio)
+```
+
+```{r}
+reg_intercept = lm(n_day_sells ~ n_day_clients, data=df)
+summary(reg_intercept)
+```
+
+Si vede che il primo modello ha un R^2 di 0.98, mentre il secondo di 0.93, per cui è meglio il primo,
+ovvero è meglio assumere che ci sia un rapporto costante tra il numero di clienti e il numero di ordini,
+piuttosto che usare un modello lineare classico con l'intercetta.
+Si nota che la miglior stima del loro rapporto, dato il numero di clienti, è 2.53, e non 2.63
+
+
+```{r}
+plot(n_day_sells ~ n_day_clients, data=df, main='numero di clienti e numero di acquisti')
+abline(reg_ratio, col='red', lwd=1.7)
+abline(reg_intercept, col='blue', lwd=1.7)
+legend('topleft', legend=c('modello senza intercetta', 'modello con intercetta'), col=c('red', 'blue'), lwd=1)
+```
+
+In effetti, se non ci sono clienti, la quantità venduta totale dovrebbe essere 0, per cui l'intercetta della retta dovrebbe essere 0.
+
+
+
+
+
+# relazione tra year e Q
+
+In anni diversi vorrei che la quantità domandata non cambiasse. Questo perché gli anni futuri non mi sono noti, e di conseguenza se sono utili a prevedere il volume delle vendite fare tale previsione sarebbe più difficile.
+
+```{r}
+df %>% mutate(year = as.factor(year)) %>% ggplot(aes(x=year, y=Q, fill=year)) + 
+  geom_boxplot() + 
+  ggtitle('quantità venduta vs anni') + 
+  theme_bw()
+```
+
+si sono avute più vendite nel 2021 o nel 2024?
+Per rispondere di nuovo conviene usare log(Q+1) per visualizzare meglio.
+
+
+```{r}
+df %>% mutate(year = as.factor(year)) %>% ggplot(aes(x=year, y=log(Q+1), fill=year)) + 
+  geom_boxplot() + 
+  ggtitle('log quantità venduta vs anni') + 
+  theme_bw()
+```
+
+
+
+
+# modelli per prevedere di Q: stime dirette
+
+Ora che sappiamo interpretare la relazione tra ogni singola variabile e la variabile Q, possiamo costruire un modello/oracolo che tenga insieme tutte le informazioni e fornisca la previsione più accurata possibile.
+La variabile da prevedere probabilmente non dovrà essere Q, ma log(Q+1), per rendere lineare la relazione tra Q e le altre variabili (le previsioni dovranno quindi essere trasformate con exp(x)-1).
+
+Le variabili di input sicuramente da includere saranno prod, food_type (che è una generalizzazione di prod),
+price e weekday. La variabile year non presenta un andamento di trend lineare nel tempo, ma potrebbe servire 
+ad aiutare l'apprendimento l'inclusione di una dummy per l'anno 2021 (in cui le vendite erano ridotte a causa del covid).
+La variabile n_day_clients non è effettivamente nota, per cui non andrebbe inclusa.
+Si potrebbe essere tentati di stimarla attraverso weekday, ma poi se si includesse anche weekday nel modello
+si avrebbero due variabili perfettamente correlate.
+Un approccio alternativo consente di includere queste variabili, e viene illustrato nel prossimo capitolo.
+
+## comparazione tra i modelli
+
+Per poter effettivamente mettere a confronto diversi modelli, bisogna valutare le loro performance non sui dati su cui sono stati addestrati, ma su un dataset che non gli è mai stato mostrato.
+Qesto ha un costo in termini di dati di training, ma consente di fornire delle stime dell'errore che non siano condizionate da overfitting (fenomeno per cui un modello prevede molto bene i dati su cui è stato addestrato ma poi non è in grado di fare previsioni adeguate su nuovi dati).
+
+I dati nel test verranno estratti casualmente da tutte le osservazioni disponibili, nella misura del 10% (per cui si avranno circa 30 osservazioni nel test e circa 260 osservazioni nel train).
+
+La metrica di errore è il MAE (mean absolute error).
+
+
+```{r}
+N = nrow(df)
+
+df = df %>% mutate(prod=as.factor(prod), food_type=as.factor(food_type), weekday=as.factor(weekday))
+
+df$prod <- factor(df$prod, levels = unique(df$prod))
+
+train_prop = 0.9
+train_n = round(N*train_prop)
+
+set.seed(42)
+id_train = sample(1:N, train_n)
+
+## per modelli semplici
+train_set = df[id_train,]
+test_set = df[-id_train,]
+
+test_set$prod <- factor(test_set$prod, levels = levels(train_set$prod))
+
+
+## per modelli non semplici
+library(xgboost)
+library(Matrix)
+
+X_sparse = df %>% dplyr::select(c(Q,P, weekday, prod))
+X_sparse = sparse.model.matrix(Q~., data=X_sparse)
+
+train_x = X_sparse[id_train,]
+test_x = X_sparse[-id_train,]
+train_y = df$Q[id_train]
+test_y = df$Q[-id_train]
+
+
+
+MAE = function(pred, actual){mean(abs(pred-actual))}
+
+cat('train obs:', nrow(train_set), '\n')
+cat('test obs:', nrow(test_set))
+
+```
+
+
+
+## modello 1: regressione lineare OLS su Q
+
+Questo modello è sbagliato, perché non usa log(Q+1). Lo faccio comunque per mostrare che performa meglio quando utilizziamo tale trasformazione
+
+```{r}
+
+ols1 = lm(Q ~ weekday + prod + food_type + P, data=train_set)
+
+summary(ols1)
+
+```
+Si noti che non è possibile usare food_type e prod insieme, in quanto ogni dummy di food_type è in realtà una combinazione lineare delle dummy di prod.
+R^2 sul train è 0.51, e forse si può fare di meglio
+Ripeto usando food_type al posto di prod
+
+
+```{r}
+
+ols2 = lm(Q ~ weekday + food_type + P, data=train_set)
+
+summary(ols2)
+
+```
+Si vede che prod contiene delle dummy molto utili, e che quando viene rimosso il modello peggiora.
+Quindi food_type è una variabile utile ai fini dell'interpretazione, ma non ai fini della previsione.
+
+Gli errori sono i seguenti:
+
+```{r}
+cat('mae of ols1 on train:'  ,MAE(predict(ols1, train_set), train_set$Q), '\n')
+cat('mae of ols1 on test:'  ,MAE(predict(ols1, test_set), test_set$Q), '\n')
+cat('mae of ols2 on train:'  ,MAE(predict(ols2, train_set), train_set$Q), '\n')
+cat('mae of ols2 on test:'  ,MAE(predict(ols2, test_set), test_set$Q), '\n')
+```
+
+Si vedono 2 cose importanti: 
+1- il modello che usa prod funziona meglio del modello che usa food_type
+2- il rischio di overfitting è presente, anche per un modello molto semplice come ols
+
+
+## modello 2: regressione lineare OLS su log(Q+1) (regressione poisson-gamma)
+
+Includo ora la trasfomazione logaritmica.
+
+```{r}
+ols3 = lm(log(Q+1) ~ weekday + prod + P, data=train_set)
+
+summary(ols3)
+```
+Si vede che R^2 è salito di 10 punti percentuali, e che alcune variabili, prima considerate trascurabili, ora sono significative.
+Le previsioni ora vanno riconvertite.
+
+```{r}
+cat('mae of ols3 on train:'  ,MAE(exp(predict(ols3, train_set))-1, train_set$Q), '\n')
+cat('mae of ols3 on test:'  ,MAE(exp(predict(ols3, test_set))-1, test_set$Q), '\n')
+```
+Sia sul train sia sul test l'errore è ridotto.
+
+
+
+## modello 3: regressione Lasso su log(Q+1)
+
+Il modello Lasso è un modello di regressione lineare penalizzata. In alcuni casi performa meglio di ols.
+
+```{r}
+library(glmnet)
+
+lasso = glmnet(train_x, log(train_y+1), alpha=0, lambda=0.01)
+
+cat('mae of lasso on train:'  ,MAE(exp(predict(lasso, train_x))-1, train_set$Q), '\n')
+cat('mae of lasso on test:'  ,MAE(exp(predict(lasso, test_x))-1, test_set$Q), '\n')
+
+
+```
+
+In questo dataset la penalizzazione non aiuta
+
+
+## modello 4: knn su log(Q+1)
+
+Questo modello prevede la variabile risposta 
+semplicemente facendo la media delle k osservazioni più simili.
+
+```{r}
+library(caret)
+
+myknn <- train(
+  log(Q+1) ~ weekday + prod + P,data = train_set,
+  method = 'knn' ,tuneGrid=data.frame(k=10))
+
+cat('mae of knn on train:'  ,MAE(exp(predict(myknn, train_set))-1, train_set$Q), '\n')
+cat('mae of knn on test:'  ,MAE(exp(predict(myknn, test_set))-1, test_set$Q), '\n')
+
+
+```
+Davvero pessimo.
+Senza prod:
+
+```{r}
+myknn <- train(
+  log(Q+1) ~ weekday +  + P,data = train_set,
+  method = 'knn' ,tuneGrid=data.frame(k=10))
+
+cat('mae of knn on train:'  ,MAE(exp(predict(myknn, train_set))-1, train_set$Q), '\n')
+cat('mae of knn on test:'  ,MAE(exp(predict(myknn, test_set))-1, test_set$Q), '\n')
+
+
+```
+
+
+## modello 5: albero di decisione su log(Q+1)
+
+
+```{r}
+library(rpart)
+library(rpart.plot)
+
+rtree = rpart(log(Q+1) ~ weekday + prod + P, 
+              data=train_set, 
+              control=rpart.control(maxdepth = 3))
+
+rpart.plot(rtree)
+```
+
+
+```{r}
+cat('mae of tree on train:'  ,MAE(exp(predict(rtree, train_set))-1, train_set$Q), '\n')
+cat('mae of tree on test:'  ,MAE(exp(predict(rtree, test_set))-1, test_set$Q), '\n')
+```
+Si vede che l'albero di decisione funziona peggio di ols sul train, ma va meglio sul test e generalizza abbastanza bene l'errore.
+A differenza dei modelli lineari, i modelli tree based possono migliorare particolarmente quando
+utilizzati con tecniche di ensemble learning, come bagging e boosting.
+
+
+Senza prod:
+
+```{r}
+rtree = rpart(log(Q+1) ~ weekday + P, 
+              data=train_set, 
+              control=rpart.control(maxdepth = 3))
+
+cat('mae of tree on train:'  ,MAE(exp(predict(rtree, train_set))-1, train_set$Q), '\n')
+cat('mae of tree on test:'  ,MAE(exp(predict(rtree, test_set))-1, test_set$Q), '\n')
+```
+
+## modello 6: random forest su log(Q+1)
+
+Il modello random forest è un'applicazione del bagging agli alberi, ovvero se ne addestrano tanti, ciascuno su una parte dei dati di train, e poi si prevede la media delle loro previsioni.
+
+```{r}
+library(randomForest)
+
+rf = randomForest(log(Q+1) ~ weekday + prod + P, 
+                  data=train_set, ntree=500, mtry=3, replace=F, sampsize=255)
+
+importance(rf)
+
+cat('mae of rf on train:'  ,MAE(exp(predict(rf, train_set))-1, train_set$Q), '\n')
+cat('mae of rf on test:'  ,MAE(exp(predict(rf, test_set))-1, test_set$Q), '\n')
+
+```
+
+
+Si vede che il modello va troppo in overfitting per molti iperparametri, ma
+per particolari valori di sampsize alti (più del 90% delle osservazioni di train), 
+riesce a migliorare molto sul test rispetto al singolo albero.
+
+
+Senza prod:
+```{r}
+rf = randomForest(log(Q+1) ~ weekday + P, 
+                  data=train_set, ntree=500, mtry=2, replace=F, sampsize=255)
+
+importance(rf)
+cat('\n')
+cat('mae of rf on train:'  ,MAE(exp(predict(rf, train_set))-1, train_set$Q), '\n')
+cat('mae of rf on test:'  ,MAE(exp(predict(rf, test_set))-1, test_set$Q), '\n')
+
+```
+
+Con prod e con n_day_clients:
+
+```{r}
+
+rf = randomForest(log(Q+1) ~ weekday + prod + P + n_day_clients, 
+                  data=train_set, ntree=500, mtry=3, replace=F, sampsize=250)
+
+importance(rf)
+cat('\n')
+cat('mae of rf on train:'  ,MAE(exp(predict(rf, train_set))-1, train_set$Q), '\n')
+cat('mae of rf on test:'  ,MAE(exp(predict(rf, test_set))-1, test_set$Q), '\n')
+
+
+```
+Anche con il modello migliore, l'inclusione di n_day_clients non sembra aiutare.
+
+
+
+
+## modello 7: xgboost su log(Q+1)
+
+
+```{r}
+library(xgboost)
+
+
+xgb = xgboost(data=train_x, label=log(train_y+1), verbose=0,
+    nrounds=50, params=list(booster='gbtree', eta=0.1, max_depth=3))
+
+cat('mae of xgb on train:'  ,MAE(exp(predict(xgb, train_x))-1, train_set$Q), '\n')
+cat('mae of xgb on test:'  ,MAE(exp(predict(xgb, test_x))-1, test_set$Q), '\n')
+```
+Di solito il boosting funziona meglio di qualsiasi altra cosa, ma non è questo il caso.
+
+
+
+
+## modelli migliori
+
+Alla fine i modelli idonei a fare stime su Q sembrano essere, in ordine di funzionalità:
+
+- il random forest su log(Q+1)
+
+- un albero di regressione su log(Q+1)
+
+- la regressione poisson (lineare su log(Q+1))
+
+
+
+# modelli per prevedere Q: stime indirette
+
+La variabile n_day_clients non è effettivamente nota, per cui non andrebbe inclusa.
+Si potrebbe essere tentati di stimarla attraverso weekday, ma poi se si includesse anche weekday nel modello si avrebbero due variabili perfettamente correlate.
+Si è visto inoltre che il numero totale delle vendite è molto correlato con la quantità di prodotti complessivamente venduta (praticamente lo stesso valore moltiplicato per 2.53).
+
+Perciò, un'idea alternativa rispetto a modelli che prevedono direttamente Q, potrebbe essere la seguente:
+- 1 stimare n_day_clients semplicemente attraverso la sua media storica giornaliera, e quindi attraverso weekday.
+- 2 stimare n_day_sells come la previsione di n_day_clients * 2.53. Si avrà quindi una stima costante per ogni giorno della settimana
+- 3 stimare per ogni prodotto non Q, bensì Q/n_day_sells, dove al posto di n_day_sells si pone 2.53*n_day_clients
+
+Al punto 3, per fare in modo che le previsioni risultino percentuali comprese tra 0 e 1, bisognerà adottare una trasformazione logit al rapporto, prevederla con il modello, e poi ritrasformare le previsioni con logit inversa o sigmoide
+
+Questo approccio è decisamente più articolato del precedente, ma forse risulterà più efficace.
+Alla fine stiamo facendo una specie di regressione binomiale, e una binomiale
+è molto vicina a una poisson.
+
+Per le analisi, si tengono gli stessi dati di test e di train della sezione precedente.
+
+## step 1: stima del numero di clienti con weekday
+
+Volendo prendere una media per giorno, bisogna di nuovo fare un modello senza intercetta.
+Non avendo osservazioni sul sabato questo comporta che non si potrà usare questo modello per prevedere quel giorno.
+
+
+Con intercetta
+```{r}
+ols_n_clients = lm(n_day_clients~weekday, data=train_set)
+summary(ols_n_clients)
+```
+Senza intercetta
+```{r}
+
+ols_n_clients = lm(n_day_clients~weekday+0, data=train_set)
+summary(ols_n_clients)
+
+```
+
+L'indice R^2 è doppio quando si esclude l'intercetta.
+
+
+## step 2: stima del numero di ordini come numero di clienti * 2.53
+
+
+
+```{r}
+
+ols_n_sells = lm(n_day_sells ~ n_day_clients + 0, data=train_set)
+summary(ols_n_sells)
+
+```
+
+## step 3: stima dei valori percentuali dei prodotti 
+
+
+Utilizzo dato r = Q/totQ, si vede che quando Q=0 anche r = 0, e logit(r) va a infinito.
+Perciò introduco un termine logit(r+0.001) per non avere infinito. 
+
+```{r}
+train_set = train_set %>% mutate(prod_sells_ratio = Q/n_day_sells)
+test_set = test_set %>% mutate(prod_sells_ratio = Q/n_day_sells)
+
+logit = function(x) {log(x/(1-x))}
+sigmoid = function(x) {1/(1+exp(-x))}
+
+g = 0.001
+
+ols_ratio = lm(logit(prod_sells_ratio+g) ~ P + weekday 
+               + prod, data=train_set)
+
+tree_ratio = rpart(logit(prod_sells_ratio+g) ~ P + weekday + prod, 
+              data=train_set, 
+              control=rpart.control(maxdepth = 3))
+
+rf_ratio = randomForest(logit(prod_sells_ratio+g) ~ P + weekday + prod, data=train_set,
+                        ntree=500, mtry=3, replace=F, sampsize=255)
+
+
+
+summary(ols_ratio)
+
+importance(rf_ratio)
+```
+Si vede che tutti e tre i modelli utilizzano praticamente solo il tipo di prodotto, ed escludono le altre variabili.
+
+
+## step 4: metto tutto insieme e stimo gli errori dei modelli
+
+
+### con totale delle vendite noto
+
+
+```{r}
+
+## totale vendite preso dai dati
+qtot_train = train_set$n_day_sells
+qtot_test = test_set$n_day_sells
+
+##prevedi percentuali di vendita
+ratio_ols_train = sigmoid(predict(ols_ratio, train_set))-g
+ratio_ols_test = sigmoid(predict(ols_ratio, test_set))-g
+ratio_tree_train = sigmoid(predict(tree_ratio, train_set))-g
+ratio_tree_test = sigmoid(predict(tree_ratio, test_set))-g
+ratio_rf_train = sigmoid(predict(rf_ratio, train_set))-g
+ratio_rf_test = sigmoid(predict(rf_ratio, test_set))-g
+
+##stima errori
+
+cat('ols error on train', MAE(ratio_ols_train*qtot_train, train_set$Q), '\n')
+cat('ols error on test', MAE(ratio_ols_test*qtot_test, test_set$Q), '\n')
+cat('tree error on train', MAE(ratio_tree_train*qtot_train, train_set$Q), '\n')
+cat('tree error on test', MAE(ratio_tree_test*qtot_test, test_set$Q), '\n')
+cat('rf error on train', MAE(ratio_rf_train*qtot_train, train_set$Q), '\n')
+cat('rf error on test', MAE(ratio_rf_test*qtot_test, test_set$Q), '\n')
+```
+
+
+
+Si vede il nuovo record del random forest sul test!
+
+
+### con totale delle vendite non noto
+
+
+```{r}
+##prevedi numero clienti
+cli_train = predict(ols_n_clients, train_set)
+cli_test = predict(ols_n_clients, test_set)
+
+##prevedi totale vendite
+qtot_train = predict(ols_n_sells, data.frame(n_day_clients=cli_train))
+qtot_test = predict(ols_n_sells,  data.frame(n_day_clients=cli_test))
+
+
+##prevedi percentuali di vendita
+ratio_ols_train = sigmoid(predict(ols_ratio, train_set))-g
+ratio_ols_test = sigmoid(predict(ols_ratio, test_set))-g
+ratio_tree_train = sigmoid(predict(tree_ratio, train_set))-g
+ratio_tree_test = sigmoid(predict(tree_ratio, test_set))-g
+ratio_rf_train = sigmoid(predict(rf_ratio, train_set))-g
+ratio_rf_test = sigmoid(predict(rf_ratio, test_set))-g
+
+##stima errori
+
+cat('ols error on train', MAE(ratio_ols_train*qtot_train, train_set$Q), '\n')
+cat('ols error on test', MAE(ratio_ols_test*qtot_test, test_set$Q), '\n')
+cat('tree error on train', MAE(ratio_tree_train*qtot_train, train_set$Q), '\n')
+cat('tree error on test', MAE(ratio_tree_test*qtot_test, test_set$Q), '\n')
+cat('rf error on train', MAE(ratio_rf_train*qtot_train, train_set$Q), '\n')
+cat('rf error on test', MAE(ratio_rf_test*qtot_test, test_set$Q), '\n')
+
+```
+
+L'errore cresce a causa della stima sbagliata dei totali.
+
+
+
+# scelta finale
+
+Tra i metodi di previsione diretta e il metodo di previsione indiretta c'è una lieve differenza 
+in termini di performance.
+Se vi fosse una perfetta conoscenza del numero di clienti presenti in una sera,
+probabilmente il metodo indiretto mostrerebbe performance previsive superiori rispetto al metodo diretto.
+I metodi di previsione indiretta sono costruiti sulla base della conoscenza intrinseca del fenomeno, e questo li rende molto eleganti, e consentono di scomporre il problema di stima della quantità venduta in 3 diversi problemi di stima:
+1 - stima del numero di clienti
+2 - stima del numero di prodotti pro capite
+3 - stima della percentuale di vendita di un prodotto
+
+Alla fine però, questa decomposizione del processo di stima porta a una somma di errori di previsione complessivamente superiore a quella degli errori dei metodo diretto, che a discapito dell'interpretabilità resta più performante.
+La semplicità e l'ingnoranza sembra vincere, con i dati a disposizione, sulla reale natura del fenomeno.
+Se si includessero altre variabili, come i dati del meteo (temperatura, umidità, pioggia ecc), probabilmente l'approccio indiretto risulterebbe più performante.
+Sarebbe anche stato possibile omettere lo step di stima del numero di clienti, e stimare direttamente il totale delle vendite con il giorno della settimana.
+Infine va detto che la funzione sigmoide consente di rispettare il vincolo per cui le percentuali stimate sono comprese tra 0 e 1, ma non il vincolo per cui tali percentuali sommino a 1.
+Un'altra possibile miglioria potrebbe quindi essere quella di rinormalizzare le previsioni sotto sigmoide attraverso la loro somma, per ottenere delle percentuali che sommino a 1.
+
+
+
+## modelli addestrati su tutti i dati disponibili
+
+Qui vengono addestrati i modelli finali, che verranno concretamente usati per fare previsioni.
+Si scelgono ols e random forest per prevedere separatamente la quantità stimata e la percentuale di venduto sul totale.
+
+
+### modelli ols
+```{r}
+df = df %>% mutate(ratio = Q / n_day_sells)
+g = 0.001
+
+ols_lq = lm(log(1+Q)~prod+P+weekday, data=df)
+summary(ols_lq)
+cat('train MAE:', MAE(exp(predict(ols_lq, df))-1, df$Q))
+```
+
+```{r}
+ols_ratio = lm(logit(g+ratio)~prod+P+weekday, data=df)
+summary(ols_ratio)
+cat('train MAE:', MAE(sigmoid(predict(ols_ratio, df))-g, df$ratio))
+```
+
+
+### modelli random forest
+
+
+```{r}
+
+rf_ratio = randomForest(logit(g+ratio)~prod+P+weekday, data=df,
+                  ntree=500, mtry=3, replace=F, sampsize=255)
+importance(rf_ratio)
+cat('\n')
+cat('train MAE:', MAE(sigmoid(predict(rf_ratio, df))-g, df$ratio))
+```
+
+
+```{r}
+rf_lq = randomForest(log(1+Q)~prod+P+weekday, data=df,
+                  ntree=500, mtry=3, replace=F, sampsize=255)
+importance(rf_lq)
+cat('\n')
+cat('train MAE:', MAE(exp(predict(rf_lq, df))-1, df$Q))
+```
+
+## modello per stimare il totale di ordini in base al giorno
+
+Questo modello è probabilmente più performante della soluzione a due stadi proposta prima (al posto che stimare n_day_clients con weekday e n_day_sells con la stima di n_day_clients stimo direttamente n_day_sells con weekday).
+
+```{r}
+ols_n_sells = lm(n_day_sells~weekday+0, data=df)
+summary(ols_n_sells)
+cat('\n')
+cat('train MAE:', MAE(fitted(ols_n_sells), df$n_day_sells))
+```
+
+
+
+
+# TABELLE DI PREVISIONE
+
+Volendo fornire quindi le previsioni a un utente finale, si fornisce la seguente tavola.
+Ogni riga rappresenta una combinazione di prezzo, giorno, prodotto e conseguentemente fornisce le stime della percentuale di vendita (dai modelli indiretti) e della quantità venduta (dal modello diretto). 
+
+I modelli ols_q, rf_q, ols_iq e rf_iq stimano tutti la quantità venduta di un prodotto,
+dati il prodotto, il giorno e il prezzo (considerato da 1 a 6 con passo 0.5).
+I modelli ols_r e rf_r stimano il rapporto tra la quantità venduta del prodotto come percentuale del totale delle vendite del giorno.
+Il modello p_sells (di tipo ols) stima, dato il giorno, il totale delle vendite di tutti i prodotti.
+Sotto le colonne ols_iq e rf_iq, rispettivamente, sono dati i prodotti tra le colonne ols_r e rf_r e la colonna p_sells.
+
+
+Importante:
+
+- nessuna delle 4 stime è un oracolo perfetto
+
+- neanche la media delle diverse stime è necessariamente una buona stima, ed è più frequente che ce ne sia solo una più giusta delle altre.
+
+- la regressione lineare è una retta continua, per cui può muoversi su un dominio infinito, mentre il modello random forest (rf) è bloccato sugli intervalli osservati nei dati. La regressione lineare è più adatta per prevedere fenomeni eccezionali, ma nella maggior parte dei casi il modello rf funziona meglio.
+
+- Il modello p_sells dipende solo dai giorni, e di conseguenza fornisce sempre la stessa stima per lo stesso giorno.
+
+La colonna p_sells viene rinominata ps.
+
+Ecco le previsioni (con modelli addestrati su tutti i dati disponibili):
+
+
+```{r}
+
+newdf = expand.grid(P = seq(1,6, by=0.5),
+                    weekday = levels(df$weekday), 
+                     prod = levels(df$prod))
+newdf = newdf[, c('prod', 'weekday', 'P')]
+
+newdf = newdf %>%
+  mutate(
+    ols_q = round(exp(predict(ols_lq, newdf))-1),
+    rf_q = round(exp(predict(rf_lq, newdf))-1),
+    ols_r = round(sigmoid(predict(ols_ratio, newdf))-g, 3),
+    rf_r = round(sigmoid(predict(rf_ratio, newdf))-g, 3),
+    p_sells = round(predict(ols_n_sells,newdf))
+  )%>%mutate(
+    ols_iq = round(p_sells*ols_r),
+    rf_iq = round(p_sells*rf_r),
+    ols_r = paste0(ols_r*100,'%'),
+    rf_r = paste0(rf_r*100,'%')
+  )
+
+
+newdf = newdf[,c('prod',  'weekday', 'P', 'ols_q', 'rf_q', 'ols_iq', 'rf_iq',
+                 'ols_r', 'rf_r', 'p_sells')]
+
+colnames(newdf)[ncol(newdf)] = 'ps'
+
+
+options(max.print=1000000)
+print.data.frame(newdf)
+
+```
+
+
+
+
+
+
+
