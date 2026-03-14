@@ -3,8 +3,8 @@
 title: "Statistiche della paninoteca"
 author: "FR"
 date: "2025-12-23"
-categories: [Economics, Optimization, R]
-tags: [Paninoteca, R]
+categories: [Economics, Optimization, R, ita]
+tags: [Paninoteca, R, Vendite]
 format:
   html:
     code-fold: true
@@ -1065,8 +1065,10 @@ newdf = newdf[,c('prod',  'weekday', 'P', 'ols_q', 'rf_q', 'ols_iq', 'rf_iq',
 colnames(newdf)[ncol(newdf)] = 'ps'
 
 
-options(max.print=1000000)
-print.data.frame(newdf)
+#options(max.print=1000000)
+#print.data.frame(newdf)
+
+DT::datatable(newdf)
 
 ```
 

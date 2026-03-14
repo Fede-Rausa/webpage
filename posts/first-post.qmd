@@ -1,10 +1,10 @@
 ---
 title: "My First Blog Post"
 date: "2024-01-01"
-categories: [General]
+categories: [general, eng]
 tags: [introduction, quarto]
 description: "My first blog post on the new website"
-image: "path/to/image.png" # optional
+image: "immagini\\monte_rosa_0284.jpg" # optional
 ---
 
 # Welcome to My Blog

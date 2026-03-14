@@ -2,8 +2,8 @@
 title: "Panini e Profitti"
 author: "FR"
 date: "2024-03-05"
-categories: [Economics, Optimization, R]
-tags: [Paninoteca, R]
+categories: [Economics, Optimization, R, ita]
+tags: [Paninoteca, R, Profitti]
 ---
 
 ```{r setup, include=FALSE}
