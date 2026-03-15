@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/referendum22.html",
       "/posts/analisi_storico_vendite.html",
       "/posts/PaniniProfitti.html",
       "/posts/edge_detection.html",
