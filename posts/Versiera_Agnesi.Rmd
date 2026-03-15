@@ -1,0 +1,144 @@
+---
+title: "La Versiera di Agnesi"
+author: "FR"
+date: "2026-03-05"
+output: html_document
+categories: [R, ita]
+tags: [R, versiera, agnesi, distribuzione]
+format:
+  html:
+    code-fold: true
+execute:
+  echo: true
+---
+
+
+
+![image](https://images.treccani.it/ext-tool/intra/images/5/57/Enciclopedia_della_Matematica_fig_letta_00430_001.jpg)
+
+
+![image](https://upload.wikimedia.org/wikipedia/commons/5/57/Maria_Gaetana_Agnesi.jpg)
+
+
+
+
+
+
+Maria Gaetana Agnesi era una nobile donna filosofa, matematica, italiana e pure milanese.
+
+Ha fatto tante belle cose, riportate su questa [wiki](https://it.wikipedia.org/wiki/Maria_Gaetana_Agnesi).
+
+Qui mi concentro su una cosa in particolare, che è forse la sua scoperta più famosa: la versiera di Agnesi. Quella che sembra un banale esercizio di geometria si è rivelato il fondamento di una distribuzione di probabilità: la distribuzione di Cauchy.
+
+L'idea di m.g.a. è stata strana ma semplice: 
+
+- disegna un cerchio, di raggio arbitrario
+
+- disegna due rette fra loro parallele tangenti ai due poli (nord e sud) del cerchio
+
+- traccia una retta dal punto tangente più basso a un punto qualsiasi dell'altra retta.
+
+- prendi l'ascissa associata all'intersezione con il cerchio e l'ordinata associata all'intersezione con la retta più alta. Hai ora un punto.
+
+- se ripeti per tutte le possibili rette passanti dal punto di tangenza tra il cerchio e la prima retta, hai ora una funzione chiamata versiera di Agnesi
+
+
+In altri paesi questa versiera è stata erroneamente tradotta come avversiera, ovvero come strega, e quidni come witch. Mentre in Italia noi chiamiamo questa figura geometrica come versiera di agnesi, in molti paesi la si chiama "agnesi witch" che forse sembra più un insulto alla memoria che un equivoco.
+
+La funzione della curva è la seguente:
+
+$$y = f(x) = \frac{8a^3}{x^2+4a^2}$$
+
+dove $a$ è il raggio del cerchio, e x è l'angolo in radianti tra la retta tangente al cerchio e la retta passante per lo stesso punto di tangenza.
+x è quindi un numero reale, e si vede come la curva assomigli molto a una gaussiana standard centrata in 0. Se x=0 allora $y = 2a$.
+
+
+
+```{r}
+versiera_agnesi = function(x,r){
+  r2 = r*r
+  r3 = r2*r
+  d = (8*r3)/(x^2+4*r2)
+  return(d)
+}
+
+r = 100
+myf = function(x){return(versiera_agnesi(x, r))}
+curve(myf(x), from=-1000, to=1000)
+
+colori = rainbow(100)
+for (r in 1:100){
+  myf = function(x){return(versiera_agnesi(x, r))}
+  curve(myf(x), from=-1000, to=1000, add=T, col=colori[r])
+}
+
+```
+
+La domanda dovrebbe sorgere spontanea: è possibile ricavare una distribuzione di probabilità da questa curva? Si, e un tizio di nome Cauchy ci ha già pensato secoli fa. Tuttavia la formula della versiera da sola non è sufficiente. Una pdf (probability density function) per essere considerata tale, deve rispettare due condizioni:
+
+- 1 : deve essere sempre positiva.
+
+- 2 : deve integrare a 1.
+
+
+La versiera rispetta la prima condizione (x è elevato al quadrato e a è il raggio di un cerchio)
+ma non la seconda. Tuttavia, se fosse possibile calcolare il suo integrale e dividerla per lo stesso, e se quindi questo integrale fosse finito, allora dividerla per quel valore equivarrebbe a normalizzarla, e quindi renderla di integrale 1.
+
+
+Si può dimostrare (e qui non lo faccio) che l'integrale della versiera è 
+
+$$4a^2\pi$$
+
+Se si divide la funzione della versiera per questo valore, si ricava la nuova funzione:
+
+
+$$y = f(x) = \frac{8a^3}{x^2+4a^2} \frac{1}{4a^2\pi} = \frac{2a}{x^2+4a^2} \frac{1}{\pi}$$
+
+
+Si nota che la densità di probabilità della distribuzione di Cauchy è
+
+$$y = f(x) = \frac{1}{\pi} \frac{\gamma}{(x-x_0)^2+\gamma^2}$$
+
+che è identica alla versiera di Agnesi normalizzata per $x_0=0$ (parametro di locazione) e $\gamma=2a$ (diametro del cerchio)!
+
+
+In R si può verificare questa equivalenza. Dato un raggio r=2 e un valore x=3 calcolo la pdf del punto sotto la distribuzione di Cauchy e la versiera normalizzata
+
+```{r}
+versiera_agnesi = function(x,r){
+  r2 = r*r
+  r3 = r2*r
+  d = (8*r3)/(x^2+4*r2)
+  d = d / (4*pi*r2)
+  return(d)
+}
+
+
+versiera_cauchy = function(x,r){
+  d=dcauchy(x, location = 0, scale = 2*r)
+  return(d)
+}
+
+
+versiera_agnesi(3, 2)
+versiera_cauchy(3, 2)
+```
+
+
+Si vede l'assoluta equivalenza delle due funzioni. 
+
+
+Per cui se mai vi chiedeste quali sono gli italiani che hanno contribuito maggiormente alla teoria della probabilità, non pensate solo a Bernoulli, c'era anche la Agnesi! E se mai vi chiedeste se sono stati solo uomini a contribuire alla teoria della probabilità, adesso avete una smentita.
+
+
+
+
+
+
+
+
+
+
+
+
+
