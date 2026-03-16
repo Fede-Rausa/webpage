@@ -3,7 +3,7 @@ title: "La Versiera di Agnesi"
 author: "FR"
 date: "2026-03-05"
 output: html_document
-categories: [R, ita]
+categories: [R, ita, distribuzione]
 tags: [R, versiera, agnesi, distribuzione]
 format:
   html:
