@@ -1,8 +1,6 @@
 ---
-title: "Personal webpage of Federico Rausa"
+title: "Welcome"
 ---
-
-### Welcome
 
 Hi! I'm Fede, and I love data science, old music and good books. 
 
