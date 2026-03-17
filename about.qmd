@@ -12,9 +12,9 @@ My contacts are [here](contacts.qmd).
 
 My CV can be dowloaded from here:
 
-- [eng](files_folder\CV_FR_eng_friv.pdf)
+- [eng](files_folder\CV_FR_eng_friv_nocell.pdf)
 
-- [ita](files_folder\CV_FR_friv.pdf)
+- [ita](files_folder\CV_FR_ita_friv_nocell.pdf)
 
 
 ## Personal Background
