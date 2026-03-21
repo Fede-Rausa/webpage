@@ -17,7 +17,7 @@ Since the origin of statistics, the most interesting problem of it was the predi
 
 And beneath it, the regression problem, that is in most cases a least squares regression. That means that we want to predict a continuous variable Y given one or more other variables X. If You understand this last sentece, skip the intro sections of this article.
 
-#Intro
+# Intro
 
 ## from expected value to conditional expected value
 

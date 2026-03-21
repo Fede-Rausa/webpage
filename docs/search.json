@@ -424,7 +424,7 @@
     "href": "posts/ols2mars.html",
     "title": "Lest Squares Regression: from OLS to MARS",
     "section": "",
-    "text": "Since the origin of statistics, the most interesting problem of it was the prediction problem.\nAnd beneath it, the regression problem, that is in most cases a least squares regression. That means that we want to predict a continuous variable Y given one or more other variables X. If You understand this last sentece, skip the intro sections of this article.\n#Intro"
+    "text": "Since the origin of statistics, the most interesting problem of it was the prediction problem.\nAnd beneath it, the regression problem, that is in most cases a least squares regression. That means that we want to predict a continuous variable Y given one or more other variables X. If You understand this last sentece, skip the intro sections of this article."
   },
   {
     "objectID": "posts/ols2mars.html#from-expected-value-to-conditional-expected-value",
