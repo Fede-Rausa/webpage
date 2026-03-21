@@ -3,7 +3,7 @@ title: 'Lest Squares Regression: from OLS to MARS'
 author: "FR"
 date: "2025-05-20"
 output: html_document
-categories: [R, eng, stat]
+categories: [R, eng]
 tags: [R, ols, mars, stat, prediction]
 format:
   html:
