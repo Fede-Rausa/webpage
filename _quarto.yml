@@ -3,6 +3,9 @@ project:
   output-dir: docs
 
 website:
+  open-graph:
+    title: "Federico Rausa Portfolio"
+    description: "Data scientist portfolio with ML projects, computer vision, statistics, analytics, IT, numerical optimization"
   title: "Fede Rausa"
   description: "personal webpage of Federico Rausa ( Fede Rausa ), a statistician from Saronno (between Varese and Milan). Federico loves data science."
   site-url: "https://fede-rausa.github.io/webpage/"  

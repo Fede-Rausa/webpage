@@ -1,5 +1,6 @@
 ---
 title: "Welcome"
+description: "Federico Fede Rausa data scientist statistician Saronno Bicocca Milan ML IT Python"
 ---
 
 Hi! I'm Fede, and I love data science, old music and good books. 
