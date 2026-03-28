@@ -4,9 +4,9 @@ project:
 
 website:
   title: "Fede Rausa"
-  description: "personal webpage of a good boy"
-  site-url: "https://fede-rausa.github.io"
-  repo-url: "https://github.com/fede-rausa/pwp"
+  description: "personal webpage of Federico Rausa ( Fede Rausa ), a statistician from Saronno (between Varese and Milan). Federico loves data science."
+  site-url: "https://fede-rausa.github.io/webpage/"  
+  repo-url: "https://github.com/Fede-Rausa/webpage"
   repo-actions: [edit]
   
   sidebar:
