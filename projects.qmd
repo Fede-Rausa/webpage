@@ -7,10 +7,11 @@ Here are some apps I have realized. How to turn pleasure in pain.
 
 ### Tools written in Python
 
+- [LLM chat](https://basicchatbot-r9ttmvx3g2xskfd2fqhvdb.streamlit.app/) : an example on how to build an LLM chat application using streamlit and HuggingFace inference providers for free. It is composed by a single python script.
+
 - BasicBusiness : a .exe used to manage sales in an improvised restaurant. Used in real life, Thermal Printer compatible.
 
 <iframe frameborder="0" src="https://itch.io/embed/2960851" width="552" height="167"><a href="https://freddocastoro.itch.io/cassapaniniexe">Basic Business (version 8.0) by freddocastoro</a></iframe>
-
 
 - [Better Image](https://betterimagedenoisers.streamlit.app/) : a streamlit app to apply special filters to images.
 
